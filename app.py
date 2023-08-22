@@ -38,10 +38,61 @@ async def get_answer(question):
         st.info('Service may be stopped or you are disconnected with internet. Feel free to open an issue here "https://github.com/Mohamed01555/VideoQuERI"')
         st.stop()
 
-def img_to_bytes(img_path):
-    img_bytes = Path(img_path).read_bytes()
-    encoded = base64.b64encode(img_bytes).decode()
-    return encoded
+def get_img_as_base64(file):
+    with open(file, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+logo='vqueri.jpeg'
+img = get_img_as_base64(logo)
+
+page_bg_img = f"""
+<style>
+[data-testid="stAppViewContainer"] > .main {{
+# background-image: url("data:image/jpeg;base64,{img}");
+# background-size: auto;
+# # opacity:0.8;
+# background-position: center;
+# background-repeat: no-repeat;
+# background-attachment: local;
+
+}}
+
+[data-testid="stSidebar"] > div:first-child {{
+# background-image: url("data:image/jpeg;base64,{img}");
+background-position: center; 
+background-repeat: no-repeat;
+background-attachment: fixed;
+}}
+
+[data-testid="stHeader"] {{
+margin-top: 0px;
+
+background: rgba(0,0,0,0);
+}}
+
+[data-testid="stToolbar"] {{
+right: 2rem;
+}}
+
+[data-testid="stExpander"]{{
+margin-top:50px
+}}
+
+
+[data-testid="stVerticalBlock"]{{
+margin-top: -5px;
+# margin-top:30px
+}}
+</style>
+"""
+
+html_code = """
+<div style="display: flex;justify-content: center;align-items: center;">
+    <h1 style='text-align: center; color: '#6c757d';'>VideoQuERI, Chatting with Videos made Easy</h1>
+    <img style="width: 150px; margin-right: 10px; border-radius:50px "" src="data:image/jpeg;base64,{}" alt="Image Description">
+</div>
+""".format(img)
 
 def main():
     # setup streamlit page
