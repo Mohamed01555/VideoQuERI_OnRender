@@ -8,10 +8,10 @@ from pathlib import Path
 from streamlit_option_menu import option_menu
 
 question_prompt_template = """
-    You are very good at handling very long texts,so I will give you a video transcription splitted in small pieces,this is piece number {i}.You will get a query about it,\n\n
-    transcription: {input}\n\n
+    You are very good at handling very long texts,so I will give you a video transcription splitted in small pieces,this is piece number {}.You will get a query about it,\n\n
+    transcription: {}\n\n
     
-    query: {question}    \n\n
+    query: {}    \n\n
     feel free to neglect the given transcription if you see that the query is not related to it like thank you or ok and similars, provide instead an appropriate answer like you are welcome.
     query may be a question about it or not, do your best to extract the answer if it exists or make up a suitable answer but hint me if you made one(say for example This answer is not mentioned but and this is a made one).
     or it can be explaining something in a simpler way,
@@ -26,7 +26,7 @@ question_prompt_template = """
     Your answer:\n\n
     """
 
-prompt = PromptTemplate(input_variables=["i","input", "question"], template=question_prompt_template)
+# prompt = PromptTemplate(input_variables=["i","input", "question"], template=question_prompt_template)
 
 async def get_answer(question):
     try:
@@ -203,7 +203,8 @@ def main():
                     for c in st.session_state.chosen_chunks: 
                         doc = st.session_state.chunks[c-1] 
                         # full_response = answer(chunk_number=c, doc = doc, question = question)
-                        query = prompt.format(i = c, input = doc.page_content, question = st.session_state.question)
+                        query = question_prompt_template.format(c, doc.page_content, st.session_state.question)
+                        # query = prompt.format(i = c, input = doc.page_content, question = st.session_state.question)
                         
                         try:
                             if video_url == st.session_state.video_url_list[-1]:
@@ -233,7 +234,8 @@ def main():
                 else:
                     for c,doc in enumerate(st.session_state.chunks):     
                         # full_response = answer(chunk_number=c+1, doc = doc, question = question)   
-                        query = prompt.format(i = c+1, input = doc.page_content, question = st.session_state.question)
+                        # query = prompt.format(i = c+1, input = doc.page_content, question = st.session_state.question)
+                        query = question_prompt_template.format(c, doc.page_content, st.session_state.question)
                         
                         try:
                             if video_url == st.session_state.video_url_list[-1]:

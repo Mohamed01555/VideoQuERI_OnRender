@@ -1,6 +1,5 @@
 gradio_client
 langchain
-spacy
 pytube
 streamlit
 streamlit_option_menu
