@@ -1,5 +1,4 @@
 import gpt4
-import gpt3
 from time import sleep
 from asyncio import run
 from langchain.prompts import PromptTemplate
@@ -35,12 +34,9 @@ async def get_answer(question):
         return resp
         
     except:
-        try:
-            resp = await gpt3.Completion().create(question)
-            return resp
-        except:
-            st.info('Service may be stopped or you are disconnected with internet. Feel free to open an issue here "https://github.com/Mohamed01555/VideoQuERI"')
-            st.stop()
+
+        st.info('Service may be stopped or you are disconnected with internet. Feel free to open an issue here "https://github.com/Mohamed01555/VideoQuERI"')
+        st.stop()
 
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
@@ -115,7 +111,7 @@ def main():
         
         help_slider= "Processing the entire video in a single iteration might be beyond the capability of GPT.\
                 So we split it in chunks. Please choose the desired chunk size. The bigger the chunk size is, the more precise the answer you get."
-        selected_value = st.slider("Select a value for chunk size", min_value=100, max_value=3000, value=1500, step=1, help=help_slider)
+        selected_value = st.slider("Select a value for chunk size", min_value=100, max_value=20000, value=1500, step=1, help=help_slider)
         
         help_button = "Creating captions from scratch for a video lasting one hour typically requires approximately 2 minutes.\n \
                        In the event of the server experiencing a high volume of requests, the caption generation process could become significantly delayed.\
@@ -131,7 +127,7 @@ def main():
                         if st.session_state.caption:
                             if ret == 'return_from_whisper':
                                 st.session_state.captions[video_url] = st.session_state.caption
-                            text_splitter = TokenTextSplitter(chunk_size = selected_value, chunk_overlap=11)
+                            text_splitter = RecursiveCharacterTextSplitter(chunk_size = selected_value, chunk_overlap=11)
                             st.session_state.chunks = text_splitter.split_documents(st.session_state.caption)
                             
                             #add the url to the list to ensure whether i will provide a summary of perious qa                            
@@ -142,7 +138,7 @@ def main():
                             st.stop() 
                     else:
                         st.session_state.caption = st.session_state.captions[video_url]
-                        text_splitter = TokenTextSplitter(chunk_size = selected_value, chunk_overlap=11)
+                        text_splitter = RecursiveCharacterTextSplitter(chunk_size = selected_value, chunk_overlap=11)
                         st.session_state.chunks = text_splitter.split_documents(st.session_state.caption)
                     
                         #add the url to the list to ensure whether i will provide a summary of perious qa    

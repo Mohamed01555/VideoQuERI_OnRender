@@ -1,7 +1,7 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 import streamlit as st
 from langchain.docstore.document import Document
-from langchain.text_splitter import TokenTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 import re
 import base64
 from whisper_result import *

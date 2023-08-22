@@ -1,6 +1,6 @@
 gradio_client
 langchain
-# tiktoken==0.1.1
+spacy
 pytube
 streamlit
 streamlit_option_menu
