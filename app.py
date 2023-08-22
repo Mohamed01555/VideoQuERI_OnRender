@@ -5,6 +5,7 @@ from utils import *
 import streamlit as st
 from pathlib import Path
 from streamlit_option_menu import option_menu
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 question_prompt_template = """
     You are very good at handling very long texts,so I will give you a video transcription splitted in small pieces,this is piece number {}.You will get a query about it,\n\n

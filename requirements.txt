@@ -1,5 +1,5 @@
 gradio_client
-langchain
+langchain==0.0.271
 pytube
 streamlit
 streamlit_option_menu
