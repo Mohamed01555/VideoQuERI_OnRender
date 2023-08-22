@@ -6,3 +6,4 @@ streamlit_option_menu
 youtube_transcript_api
 yt_dlp
 tls-client
+pydantic==0.0.1
