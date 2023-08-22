@@ -2,8 +2,9 @@ from youtube_transcript_api import YouTubeTranscriptApi
 import streamlit as st
 from langchain.docstore.document import Document
 import re
-import base64
-from whisper_result import *
+import base64,time
+
+# from whisper_result import *
 
 def postprocess_time_if_transcript_was_already_generated(time):
     if time < 60:
@@ -65,13 +66,13 @@ def get_transcript(video_url):
     except:
         st.info("Looks like the provided video does not have transcription. Plese be patient until transcription is generated.")
         s = time.time()
-        transcript = get_whisper_result(video_url)
-        if transcript:
-            st.info(f"Generating Caption took {round(time.time() - s, 2)} seconds")
-            return [Document(page_content=transcript)], 'return_from_whisper'
+        # transcript = get_whisper_result(video_url)
+        # if transcript:
+        #     st.info(f"Generating Caption took {round(time.time() - s, 2)} seconds")
+        #     return [Document(page_content=transcript)], 'return_from_whisper'
         
-        else:
-            return False, ''
+        # else:
+        #     return False, ''
 
 # Define your FAQ questions and answers
 def FAQs():
