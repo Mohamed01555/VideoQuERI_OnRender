@@ -1,7 +1,6 @@
 import gpt4
 from time import sleep
 from asyncio import run
-from langchain.prompts import PromptTemplate
 from utils import *
 import streamlit as st
 from pathlib import Path
