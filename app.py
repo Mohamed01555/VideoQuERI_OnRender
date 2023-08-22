@@ -5,7 +5,7 @@ from utils import *
 import streamlit as st
 from pathlib import Path
 from streamlit_option_menu import option_menu
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.text_splitter import NLTKTextSplitter
 
 question_prompt_template = """
     You are very good at handling very long texts,so I will give you a video transcription splitted in small pieces,this is piece number {}.You will get a query about it,\n\n
@@ -127,7 +127,7 @@ def main():
                         if st.session_state.caption:
                             if ret == 'return_from_whisper':
                                 st.session_state.captions[video_url] = st.session_state.caption
-                            text_splitter = RecursiveCharacterTextSplitter(chunk_size = selected_value, chunk_overlap=11)
+                            text_splitter = NLTKTextSplitter(chunk_size = selected_value, chunk_overlap=11)
                             st.session_state.chunks = text_splitter.split_documents(st.session_state.caption)
                             
                             #add the url to the list to ensure whether i will provide a summary of perious qa                            
@@ -138,7 +138,7 @@ def main():
                             st.stop() 
                     else:
                         st.session_state.caption = st.session_state.captions[video_url]
-                        text_splitter = RecursiveCharacterTextSplitter(chunk_size = selected_value, chunk_overlap=11)
+                        text_splitter = NLTKTextSplitter(chunk_size = selected_value, chunk_overlap=11)
                         st.session_state.chunks = text_splitter.split_documents(st.session_state.caption)
                     
                         #add the url to the list to ensure whether i will provide a summary of perious qa    
