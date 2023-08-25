@@ -7,3 +7,4 @@ youtube_transcript_api
 yt_dlp
 tls-client
 pydantic==1.10.2
+curl_cffi
